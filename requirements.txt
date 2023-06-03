@@ -1,0 +1,8 @@
+pydantic
+typing
+fastapi
+requests
+json
+couchdb
+sys
+os 
