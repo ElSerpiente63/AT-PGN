@@ -11,14 +11,14 @@
 - <Bridge.h>
 - <ArduinoHttpClient.h>
 - <BridgeHttpClient.h>
-- <couchdb>
-- <requests>
-- <json>
-- <pydantic>
-- <typing>
-- <importlib>
-- <sys>
-- <fastapi>
-- <uuid>
-- <passlib>
+- <couchdb.py>
+- <requests.py>
+- <json.py>
+- <pydantic.py>
+- <typing.py>
+- <importlib.py>
+- <sys.py>
+- <fastapi.py>
+- <uuid.py>
+- <passlib.py>
 
