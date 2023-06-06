@@ -1,7 +1,7 @@
 # AT-PGN
 - Ceci est le depot github d'un projet hardware.
 
-# Librairies nécessaires pour l'entete du fichier ino de votre copie de ce projet.
+# Librairies nécessaires pour ce projet.
 - <WiFi.h>
 - <WiFiClient.h>
 - <WiFiServer.h>
