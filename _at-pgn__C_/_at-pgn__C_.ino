@@ -32,6 +32,8 @@ void setup() {
   while(!SerialUSB);
   client.addHeader("Content-Type: application/json");
   client.enableInsecure();
+  import("config/configuration.h");
+  import("BridgeHttpClient.h");
 }
 
 void loop() {
@@ -90,4 +92,13 @@ void makePostRequest(int datadistance) {
   data += token
   data += "\"}";
   client.post(url, data);
+}
+bool import(String lib) {
+  try {
+    #include lib
+    print("Imported");
+    } 
+  catch {
+    print("Not imported");
+    } 
 }
