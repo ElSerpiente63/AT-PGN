@@ -11,10 +11,10 @@
 #include "C:/Users/33769/Desktop/config/configuration.h"
 
 
-#define STEPPER_PIN_1 6
-#define STEPPER_PIN_2 11
-#define STEPPER_PIN_3 10
-#define STEPPER_PIN_4 12
+#define STEPPER_PIN_1 6;
+#define STEPPER_PIN_2 11;
+#define STEPPER_PIN_3 10;
+#define STEPPER_PIN_4 12;
 
 int trigPin = 9;
 int echoPin = 8;
