@@ -8,7 +8,7 @@
 #include <Bridge.h>
 #include <ArduinoHttpClient.h>
 #include <BridgeHttpClient.h>
-#include "config/configuration.h"
+#include "C:/Users/33769/Desktop/config/configuration.h"
 
 
 #define STEPPER_PIN_1 6
@@ -16,18 +16,21 @@
 #define STEPPER_PIN_3 10
 #define STEPPER_PIN_4 12
 
-const int trigPin = 9;
-const int echoPin = 8;
-const int buzzerPin = 3;
+int trigPin = 9;
+int echoPin = 8;
+int buzzerPin = 3;
 long duration;
 int distance;
 Servo myServo;
 BridgeHttpClient client;
-String token = "45e04c0f-07d8-48ab-9386-b0af81bab9c3" //token à envoyer à l'api pour s'authentifier
-const char* serverIP = "127.0.0.1"
-const char* port = "2000"
-const char* endpoint = "/distance/datas"
+String tokenn = token; //token à envoyer à l'api pour s'authentifier
+String serverIP = "127.0.0.1";
+String port = "2000";
+String endpoint = "/distance/datas";
 void setup() {
+  Serial.println(ssis);
+  Serial.println(password);
+  Serial.println(token);
   WiFi.begin(ssid, password); //déjà importées
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -39,8 +42,6 @@ void setup() {
   while(!SerialUSB);
   client.addHeader("Content-Type: application/json");
   client.enableInsecure();
-  import("config/configuration.h");
-  import("BridgeHttpClient.h");
 }
 
 void loop() {
@@ -88,13 +89,13 @@ void makePostRequest(int datadistance) {
   data += "\",\"hour\":\"";
   data += response;
   data +="\",\"token\":\"";
-  data += token
+  data += tokenn
   data += "\"}";
   client.post(url, data);
 }
-bool import(String lib) {
+bool import() {
   try {
-    #include lib
+    #include "C:/Users/33769/Desktop/config/configuration.h"
     Serial.println("Imported");
     } 
   catch {
