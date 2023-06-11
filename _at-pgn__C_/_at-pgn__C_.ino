@@ -9,6 +9,13 @@
 #include <ArduinoHttpClient.h>
 #include <BridgeHttpClient.h>
 #include "config/configuration.h"
+
+
+#define STEPPER_PIN_1 6
+#define STEPPER_PIN_2 11
+#define STEPPER_PIN_3 10
+#define STEPPER_PIN_4 12
+
 const int trigPin = 9;
 const int echoPin = 8;
 const int buzzerPin = 3;
@@ -37,15 +44,11 @@ void setup() {
 }
 
 void loop() {
+  OneStep(false);
   for (int i = 15; i <= 165; i++) {
     myServo.write(i);
     delay(0);
     distance = calculateDistance();
-    Serial.print(i);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.print(",");
-
     if (distance <= 100) { // Condition pour une distance inférieure à 1 mètre
       tone(buzzerPin, 500, 400); // Active le buzzer
       makePostRequest(distance);
@@ -53,15 +56,10 @@ void loop() {
   }
 
   for (int i = 165; i > 15; i--) {
+    OneStep(false);
     myServo.write(i);
     delay(0);
     distance = calculateDistance();
-
-    Serial.print(i);
-    Serial.print(",");
-    Serial.print(distance);
-    Serial.print(",");
-
     if (distance <= 100) { // Condition pour une distance inférieure à 1 mètre
       tone(buzzerPin, 500, 400); // Active le buzzer
       makePostRequest(distance);
@@ -84,6 +82,7 @@ void makePostRequest(int datadistance) {
   client.get("https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam");
   String url = "http://127.0.0.1:2000/distance/datas";
   String data = "{\"distance\":\"";
+  println(response);
   data+=datadistance;
   data +="\"}";
   data += "\",\"hour\":\"";
@@ -96,9 +95,74 @@ void makePostRequest(int datadistance) {
 bool import(String lib) {
   try {
     #include lib
-    print("Imported");
+    Serial.println("Imported");
     } 
   catch {
-    print("Not imported");
+    Serial.println("Not imported");
     } 
+}
+
+
+
+void OneStep(bool dir){
+    if(dir){
+switch(step_number){
+  case 0:
+  digitalWrite(STEPPER_PIN_1, HIGH);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  digitalWrite(STEPPER_PIN_4, LOW);
+  break;
+  case 1:
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, HIGH);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  digitalWrite(STEPPER_PIN_4, LOW);
+  break;
+  case 2:
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, HIGH);
+  digitalWrite(STEPPER_PIN_4, LOW);
+  break;
+  case 3:
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  digitalWrite(STEPPER_PIN_4, HIGH);
+  break;
+} 
+  }else{
+    switch(step_number){
+  case 0:
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  digitalWrite(STEPPER_PIN_4, HIGH);
+  break;
+  case 1:
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, HIGH);
+  digitalWrite(STEPPER_PIN_4, LOW);
+  break;
+  case 2:
+  digitalWrite(STEPPER_PIN_1, LOW);
+  digitalWrite(STEPPER_PIN_2, HIGH);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  digitalWrite(STEPPER_PIN_4, LOW);
+  break;
+  case 3:
+  digitalWrite(STEPPER_PIN_1, HIGH);
+  digitalWrite(STEPPER_PIN_2, LOW);
+  digitalWrite(STEPPER_PIN_3, LOW);
+  digitalWrite(STEPPER_PIN_4, LOW);
+ 
+  
+} 
+  }
+step_number++;
+  if(step_number > 3){
+    step_number = 0;
+  }
 }
