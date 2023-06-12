@@ -11,10 +11,10 @@
 #include "C:/Users/33769/Desktop/config/configuration.h"
 
 
-#define STEPPER_PIN_1 6;
-#define STEPPER_PIN_2 11;
-#define STEPPER_PIN_3 10;
-#define STEPPER_PIN_4 12;
+#define STEPPER_PIN_1 6
+#define STEPPER_PIN_2 11
+#define STEPPER_PIN_3 10
+#define STEPPER_PIN_4 12
 
 int trigPin = 9;
 int echoPin = 8;
@@ -23,7 +23,7 @@ long duration;
 int distance;
 Servo myServo;
 BridgeHttpClient client;
-String tokenn = token; //token à envoyer à l'api pour s'authentifier
+String tokenn = token; //token à envoyer à l'api pour s'authentifier il a été importé 
 String serverIP = "127.0.0.1";
 String port = "2000";
 String endpoint = "/distance/datas";
@@ -38,7 +38,7 @@ void setup() {
   myServo.attach(7);
   pinMode(buzzerPin, OUTPUT); // Définit le buzzerPin comme une sortie
   Bridge.begin();
-  SerialUSB.begin(9600)
+  SerialUSB.begin(9600);
   while(!SerialUSB);
   client.addHeader("Content-Type: application/json");
   client.enableInsecure();
@@ -84,12 +84,12 @@ void makePostRequest(int datadistance) {
   String url = "http://127.0.0.1:2000/distance/datas";
   String data = "{\"distance\":\"";
   println(response);
-  data+=datadistance;
-  data +="\"}";
-  data += "\",\"hour\":\"";
+  data += datadistance;
+  data += "\"";
+  data += ",\"hour\":\"";
   data += response;
-  data +="\",\"token\":\"";
-  data += tokenn
+  data += "\",\"token\":\"";
+  data += tokenn;
   data += "\"}";
   client.post(url, data);
 }
