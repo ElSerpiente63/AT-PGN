@@ -13,16 +13,12 @@ int buzzerPin = 3;
 long duration;
 int distance;
 Servo myServo;
-BridgeHttpClient client;
-String tokenn = token; //token à envoyer à l'api pour s'authentifier il a été importé 
-String serverIP = "127.0.0.1";
-String port = "2000";
-String endpoint = "/distance/datas";
+//BridgeHttpClient client;
+//String tokenn = token; //token à envoyer à l'api pour s'authentifier il a été importé 
+//String serverIP = "127.0.0.1";
+//String port = "2000";
+//String endpoint = "/distance/datas";
 void setup() {
-  Serial.println(ssis);
-  Serial.println(password);
-  Serial.println(token);
-  WiFi.begin(ssid, password); //déjà importées
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   Serial.begin(9600);
@@ -36,6 +32,10 @@ void setup() {
 //client.addHeader("Content-Type: application/json");
 //client.enableInsecure();
 //WiFi.begin(ssid, password); 
+//Serial.println(ssis);
+//Serial.println(password);
+//Serial.println(token);
+//WiFi.begin(ssid, password); //déjà importées
 void loop() {
   OneStep(false);
   for (int i = 15; i <= 165; i++) {
