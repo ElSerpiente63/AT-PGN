@@ -1,13 +1,4 @@
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <WiFiServer.h>
-#include <WiFiUdp.h>
 #include <Servo.h>
-#include <HttpClient.h>
-#include <WiFi.h>
-#include <Bridge.h>
-#include <ArduinoHttpClient.h>
-#include <BridgeHttpClient.h>
 #include "C:/Users/33769/Desktop/config/configuration.h"
 
 
@@ -37,13 +28,14 @@ void setup() {
   Serial.begin(9600);
   myServo.attach(7);
   pinMode(buzzerPin, OUTPUT); // Définit le buzzerPin comme une sortie
-  Bridge.begin();
-  SerialUSB.begin(9600);
-  while(!SerialUSB);
-  client.addHeader("Content-Type: application/json");
-  client.enableInsecure();
 }
-
+// à mettre dans le futur void setup
+//Bridge.begin();
+//SerialUSB.begin(9600);
+//while(!SerialUSB);
+//client.addHeader("Content-Type: application/json");
+//client.enableInsecure();
+//WiFi.begin(ssid, password); 
 void loop() {
   OneStep(false);
   for (int i = 15; i <= 165; i++) {
@@ -51,8 +43,9 @@ void loop() {
     delay(0);
     distance = calculateDistance();
     if (distance <= 100) { // Condition pour une distance inférieure à 1 mètre
-      tone(buzzerPin, 500, 400); // Active le buzzer
-      makePostRequest(distance);
+      tone(buzzerPin, 500, 400);
+      digitalWrite(buzzerPin, HIGH);
+       // Active le buzzer
     }
   }
 
@@ -62,8 +55,8 @@ void loop() {
     delay(0);
     distance = calculateDistance();
     if (distance <= 100) { // Condition pour une distance inférieure à 1 mètre
-      tone(buzzerPin, 500, 400); // Active le buzzer
-      makePostRequest(distance);
+      tone(buzzerPin, 500, 400);
+      digitalWrite(buzzerPin, HIGH); // Active le buzzer
     }
   }
 }
@@ -78,21 +71,7 @@ int calculateDistance() {
   distance = duration * 0.034 / 2; // Calcul de la distance en centimètres
   return distance;
 }
-void makePostRequest(int datadistance) {
-  String response;
-  client.get("https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam");
-  String url = "http://127.0.0.1:2000/distance/datas";
-  String data = "{\"distance\":\"";
-  println(response);
-  data += datadistance;
-  data += "\"";
-  data += ",\"hour\":\"";
-  data += response;
-  data += "\",\"token\":\"";
-  data += tokenn;
-  data += "\"}";
-  client.post(url, data);
-}
+
 bool import() {
   try {
     #include "C:/Users/33769/Desktop/config/configuration.h"

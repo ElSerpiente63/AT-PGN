@@ -22,3 +22,6 @@
 - <uuid.py>
 - <passlib.py>
 
+# Steps
+  - Step one : enable the working of the object in terms of hardware
+  - Step two : then make the requests work and all backend stuff (api to collect distance, databases fot tha savings...)
