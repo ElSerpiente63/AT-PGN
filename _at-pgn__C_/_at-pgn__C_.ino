@@ -1,24 +1,24 @@
-#include <Servo.h>
-#include "C:/Users/33769/Desktop/config/configuration.h"
+#include <Servo.h> 
 
 
+
+;const int trigPin = 9;
+const int echoPin = 8;
+const int buzzerPin = 3;
+long duration;
+int distance;
+Servo myServo;
 #define STEPPER_PIN_1 6
 #define STEPPER_PIN_2 11
 #define STEPPER_PIN_3 10
 #define STEPPER_PIN_4 12
-
-int trigPin = 9;
-int echoPin = 8;
-int buzzerPin = 3;
-long duration;
-int distance;
-Servo myServo;
 //BridgeHttpClient client;
 //String tokenn = token; //token à envoyer à l'api pour s'authentifier il a été importé 
 //String serverIP = "127.0.0.1";
 //String port = "2000";
 //String endpoint = "/distance/datas";
 void setup() {
+  tone(buzzerPin, 400,500);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   Serial.begin(9600);
@@ -37,8 +37,8 @@ void setup() {
 //Serial.println(token);
 //WiFi.begin(ssid, password); //déjà importées
 void loop() {
-  OneStep(false);
   for (int i = 15; i <= 165; i++) {
+    OneStep(true, 0);
     myServo.write(i);
     delay(0);
     distance = calculateDistance();
@@ -50,7 +50,7 @@ void loop() {
   }
 
   for (int i = 165; i > 15; i--) {
-    OneStep(false);
+    OneStep(true, 0);
     myServo.write(i);
     delay(0);
     distance = calculateDistance();
@@ -72,19 +72,7 @@ int calculateDistance() {
   return distance;
 }
 
-bool import() {
-  try {
-    #include "C:/Users/33769/Desktop/config/configuration.h"
-    Serial.println("Imported");
-    } 
-  catch {
-    Serial.println("Not imported");
-    } 
-}
-
-
-
-void OneStep(bool dir){
+void OneStep(bool dir, int step_number){ 
     if(dir){
 switch(step_number){
   case 0:
